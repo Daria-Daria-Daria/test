@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тренажёр: Аргументы должника против неустойки</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #e2e9f0;
+      font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .card {
+      max-width: 1100px;
+      width: 100%;
+      background-color: #ffffff;
+      border-radius: 60px;
+      padding: 3rem;
+      box-shadow: 0 35px 55px -20px rgba(26, 67, 113, 0.3), 0 10px 20px -5px rgba(0, 77, 153, 0.2);
+      border: 1px solid rgba(0, 105, 180, 0.2);
+    }
+
+    h1 {
+      font-size: 2.6rem;
+      font-weight: 450;
+      color: #13294B;
+      letter-spacing: -0.01em;
+      border-bottom: 2px solid #1E4A7A;
+      padding-bottom: 0.8rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .blocks-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .block {
+      background: #f0f5fc;
+      border-radius: 40px;
+      padding: 1.5rem;
+      border: 1px solid rgba(0, 77, 153, 0.2);
+    }
+
+    .block-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 30px;
+      transition: 0.2s;
+    }
+
+    .block-header:hover {
+      background: rgba(0, 77, 153, 0.05);
+    }
+
+    .block-icon {
+      width: 40px;
+      height: 40px;
+      background: #1E4A7A;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.3rem;
+    }
+
+    .block-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #13294B;
+      flex: 1;
+    }
+
+    .block-arrow {
+      font-size: 1.5rem;
+      color: #1E4A7A;
+      transition: transform 0.3s;
+    }
+
+    .block.open .block-arrow {
+      transform: rotate(90deg);
+    }
+
+    .arguments-list {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 2px dashed #1E4A7A;
+      display: none;
+    }
+
+    .block.open .arguments-list {
+      display: block;
+    }
+
+    .argument-item {
+      background: white;
+      border: 1px solid rgba(0, 77, 153, 0.2);
+      border-radius: 30px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .argument-header {
+      padding: 1.2rem 1.5rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: 0.2s;
+    }
+
+    .argument-header:hover {
+      background: #e3edf9;
+    }
+
+    .argument-title {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #13294B;
+    }
+
+    .argument-arrow {
+      color: #1E4A7A;
+      transition: transform 0.3s;
+    }
+
+    .argument-item.open .argument-arrow {
+      transform: rotate(90deg);
+    }
+
+    .argument-content {
+      padding: 1.5rem;
+      background: #f8faff;
+      border-top: 1px solid #1E4A7A;
+      display: none;
+      line-height: 1.6;
+      color: #2c3e50;
+    }
+
+    .argument-item.open .argument-content {
+      display: block;
+    }
+
+    .strategy-note {
+      background: #e8f0fe;
+      border-left: 6px solid #1E4A7A;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-radius: 20px;
+    }
+
+    .footnote {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #4a5a6a;
+      text-align: center;
+      border-top: 1px dashed #1E4A7A;
+      padding-top: 1.2rem;
+    }
+
+    @media (max-width: 700px) {
+      .card { padding: 2rem; }
+      h1 { font-size: 2rem; }
+      .block-title { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>⚖️ Тренажёр: аргументы должника против неустойки</h1>
+
+    <div class="blocks-container">
+      <!-- Блок 1: Неустойка несоразмерна -->
+      <div class="block" id="block1">
+        <div class="block-header">
+          <div class="block-icon">1</div>
+          <div class="block-title">Неустойка несоразмерна последствиям нарушения обязательства</div>
+          <div class="block-arrow">▶</div>
+        </div>
+        <div class="arguments-list">
+          <!-- Аргумент 1.1 -->
+          <div class="argument-item">
+            <div class="argument-header">
+              <span class="argument-title">Сумма неустойки кратно превышает сумму долга</span>
+              <span class="argument-arrow">▶</span>
+            </div>
+            <div class="argument-content">
+              <p>Суд может снизить размер неустойки, если ее сумма превышает размер долга. В данной ситуации советуем представить расчет убытков и сделать акцент на обеспечительной функции неустойки. Если поймете, что суд намерен снизить неустойку, представьте новый расчет, уменьшив сумму неустойки. Тогда суд с меньшей вероятностью снизит размер неустойки до минимальных значений.</p>
+              <div class="strategy-note">
+                <strong>💡 Важно:</strong> Если ваш проект имел социальную значимость, также укажите на это суду. В такой ситуации вероятность снижения неустойки ниже.
+              </div>
+            </div>
+          </div>
+
+          <!-- Аргумент 1.2 -->
+          <div class="argument-item">
+            <div class="argument-header">
+              <span class="argument-title">У кредитора не возникли убытки от неисполнения обязательства</span>
+              <span class="argument-arrow">▶</span>
+            </div>
+            <div class="argument-content">
+              <p>Если убытки действительно не возникли, укажите на обеспечительную функцию неустойки. Также представьте в суд актуальные ставки по кредитам в банке. Если кредит в банке дороже, чем пользование вашими денежными средствами, это будет аргумент против снижения неустойки.</p>
+            </div>
+          </div>
+
+          <!-- Аргумент 1.3 -->
+          <div class="argument-item">
+            <div class="argument-header">
+              <span class="argument-title">Небольшой срок просрочки исполнения обязательства</span>
+              <span class="argument-arrow">▶</span>
+            </div>
+            <div class="argument-content">
+              <p>Представьте расчет убытков, если они были. Сделайте акцент на том, что даже незначительная просрочка вызвала у вас трудности. Также представьте в суд доказательства вашей добросовестности: вы предоставили должнику все необходимое для исполнения обязательства: информацию, документы, реквизиты и т.д.</p>
+            </div>
+          </div>
+
+          <!-- Аргумент 1.4 -->
+          <div class="argument-item">
+            <div class="argument-header">
+              <span class="argument-title">Размер неустойки превышает ставки по коммерческим кредитам</span>
+              <span class="argument-arrow">▶</span>
+            </div>
+            <div class="argument-content">
+              <p>Если должник ранее также нарушал сроки исполнения обязательств, укажите на это суду. Тогда можно указать, что неустойка имела обеспечительную функцию, чтобы контрагент в этот раз исполнил обязательство вовремя. Также представьте в суд расчет убытков. Если суд намерен снизить размер неустойки, предложите новый расчет неустойки с учетом актуальных ставок по коммерческим кредитам.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Блок 2: Кредитор получил необоснованную выгоду -->
+      <div class="block" id="block2">
+        <div class="block-header">
+          <div class="block-icon">2</div>
+          <div class="block-title">Кредитор получил необоснованную выгоду</div>
+          <div class="block-arrow">▶</div>
+        </div>
+        <div class="arguments-list">
+          <!-- Аргумент 2.1 -->
+          <div class="argument-item">
+            <div class="argument-header">
+              <span class="argument-title">Кредитор поздно подал иск, чтобы сумма неустойки росла</span>
+              <span class="argument-arrow">▶</span>
+            </div>
+            <div class="argument-content">
+              <p>В данной ситуации нужно убедить суд, что вы вели себя добросовестно. Например, должник обещал исполнить обязательство, а вы ему верили. Представьте в суд переписку со стороной. Либо укажите на иные обстоятельства, которые препятствовали вам подать заявление раньше.</p>
+            </div>
+          </div>
+
+          <!-- Аргумент 2.2 -->
+          <div class="argument-item">
+            <div class="argument-header">
+              <span class="argument-title">В договоре незеркальное условие об ответственности</span>
+              <span class="argument-arrow">▶</span>
+            </div>
+            <div class="argument-content">
+              <p>В данной ситуации суд с большой долей вероятности снизит размер неустойки. Советуем представить расчет убытков. Также аргументируйте суду, что вы не были сильной стороной правоотношений и контрагент согласовал неустойку добровольно.</p>
+              <div class="strategy-note">
+                <strong>💡 Важно:</strong> Если должник не исполнил обязательство по социально значимому объекту, это также будет аргументом против снижения неустойки.
+              </div>
+            </div>
+          </div>
+
+          <!-- Аргумент 2.3 -->
+          <div class="argument-item">
+            <div class="argument-header">
+              <span class="argument-title">Кредитор — сильная сторона правоотношений</span>
+              <span class="argument-arrow">▶</span>
+            </div>
+            <div class="argument-content">
+              <p>Для начала попробуйте опровергнуть аргументы кредитора, что вы сильная сторона правоотношений и навязали условие о размере неустойки. Если же у вас действительно было преимущество, советуем представить расчет убытков, аргументировать размер неустойки ставкой ЦБ и ставками по коммерческим кредитам. Подготовьте аргументы, что должник ведет себя недобросовестно.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Блок 3: Кредитор виноват в неисполнении обязательства -->
+      <div class="block" id="block3">
+        <div class="block-header">
+          <div class="block-icon">3</div>
+          <div class="block-title">Кредитор виноват в неисполнении обязательства</div>
+          <div class="block-arrow">▶</div>
+        </div>
+        <div class="arguments-list">
+          <!-- Аргумент 3.1 -->
+          <div class="argument-item">
+            <div class="argument-header">
+              <span class="argument-title">Кредитор не предоставил необходимые документы</span>
+              <span class="argument-arrow">▶</span>
+            </div>
+            <div class="argument-content">
+              <p>В договорах подряда частой ситуацией является задержка утверждения проектной сметы или актов выполненных работ со стороны заказчика. В подобной ситуации представьте доказательства, что у контрагента были все необходимые документы. В других ситуациях делайте акцент на том, что должник мог исполнить обязательство и без запрашиваемых документов. Также, если должник не писал вам и не просил предоставить документ, укажите суду на это обстоятельство.</p>
+            </div>
+          </div>
+
+          <!-- Аргумент 3.2 -->
+          <div class="argument-item">
+            <div class="argument-header">
+              <span class="argument-title">Кредитор препятствовал исполнению обязательства</span>
+              <span class="argument-arrow">▶</span>
+            </div>
+            <div class="argument-content">
+              <p>Обычно такая ситуация возникает при исполнении договора строительного подряда. Контрагент будет ссылаться на то, что его не пускали на объект, не предоставили материалы и т.д. Данные утверждения необходимо опровергнуть. Но в других ситуациях доказать, что кредитор препятствовал исполнению затруднительно. Бремя доказывания лежит на должнике. Если он не фиксировал каждый запрос, каждый ваш отказ и т.д., суд будет на вашей стороне.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footnote">
+      Нажмите на блок, чтобы увидеть аргументы. Нажмите на аргумент, чтобы узнать стратегию защиты.
+    </div>
+  </div>
+
+  <script>
+    // Открытие/закрытие блоков
+    document.querySelectorAll('.block-header').forEach(header => {
+      header.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const block = header.closest('.block');
+        block.classList.toggle('open');
+      });
+    });
+
+    // Открытие/закрытие аргументов
+    document.querySelectorAll('.argument-header').forEach(header => {
+      header.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const argument = header.closest('.argument-item');
+        
+        // Закрываем другие аргументы в этом же блоке (опционально)
+        const parentBlock = argument.closest('.block');
+        parentBlock.querySelectorAll('.argument-item').forEach(item => {
+          if (item !== argument) {
+            item.classList.remove('open');
+          }
+        });
+        
+        argument.classList.toggle('open');
+      });
+    });
+  </script>
+</body>
+</html>
