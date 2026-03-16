@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Виды ИИ | Интерактив</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #FDFBF7;
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            line-height: 1.5;
+            color: #2E2E2E;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .collection-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: 350;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            color: #D4AF37;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            padding-bottom: 1rem;
+            word-spacing: 6px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 28px;
+            padding: 1.8rem 1.2rem 1.4rem 1.2rem;
+            box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.03), 0 4px 12px rgba(212, 175, 55, 0.05);
+            transition: all 0.25s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            backdrop-filter: blur(4px);
+        }
+
+        .card:hover {
+            border-color: rgba(212, 175, 55, 0.5);
+            box-shadow: 0 24px 40px -12px rgba(212, 175, 55, 0.25), 0 8px 18px rgba(212, 175, 55, 0.1);
+            transform: translateY(-6px) scale(1.01);
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .card:active {
+            transform: scale(0.98);
+            transition: 0.1s;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            bottom: 12px;
+            right: 20px;
+            width: 26px;
+            height: 26px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .card:hover::after {
+            background: rgba(212, 175, 55, 0.25);
+            width: 32px;
+            height: 32px;
+            bottom: 8px;
+            right: 16px;
+        }
+
+        .card.selected {
+            border: 2px solid #D4AF37;
+            background: #ffffff;
+            box-shadow: 0 30px 40px -16px rgba(212, 175, 55, 0.3);
+        }
+
+        .card.selected::after {
+            background: #D4AF37;
+            opacity: 0.2;
+            width: 40px;
+            height: 40px;
+            bottom: 4px;
+            right: 10px;
+        }
+
+        .card h2 {
+            font-size: 1.7rem;
+            font-weight: 400;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.4rem;
+            color: #2E2E2E;
+            border-bottom: 1px dashed rgba(212, 175, 55, 0.3);
+            padding-bottom: 0.5rem;
+            width: 100%;
+        }
+
+        .card .hint {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #D4AF37;
+            letter-spacing: 1.5px;
+            opacity: 0.65;
+            margin-top: 0.5rem;
+            transition: opacity 0.2s;
+        }
+
+        .card:hover .hint {
+            opacity: 1;
+        }
+
+        .detail-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 48px;
+            padding: 2rem 2.5rem;
+            margin-top: 1rem;
+            box-shadow: 0 20px 40px -14px rgba(0,0,0,0.05);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+            min-height: 160px;
+            display: flex;
+            align-items: center;
+            color: #2E2E2E;
+            font-weight: 350;
+            font-size: 1.25rem;
+            border-left: 8px solid #D4AF37;
+            word-break: break-word;
+        }
+
+        .detail-content {
+            position: relative;
+            padding-left: 1rem;
+            line-height: 1.6;
+            letter-spacing: 0.2px;
+            width: 100%;
+        }
+
+        .fade-in {
+            animation: gentleAppear 0.4s ease-out;
+        }
+
+        @keyframes gentleAppear {
+            0% { opacity: 0; transform: translateY(8px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .placeholder-text {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #a7a7a7;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .placeholder-text span {
+            font-size: 2rem;
+            opacity: 0.4;
+            color: #D4AF37;
+        }
+
+        @media (max-width: 600px) {
+            .grid {
+                gap: 1rem;
+            }
+            .card h2 {
+                font-size: 1.4rem;
+            }
+            .detail-panel {
+                padding: 1.5rem;
+                font-size: 1rem;
+            }
+        }
+
+        .gold-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: #D4AF37;
+            border-radius: 50%;
+            margin: 0 8px;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="collection-title">
+            ✦  ВИДЫ ИИ  ✦
+        </div>
+
+        <div class="grid" id="aiGrid">
+            <div class="card" data-id="gigachat">
+                <h2>GigaChat</h2>
+                <div class="hint">︎︎⚲ подробнее</div>
+            </div>
+            <div class="card" data-id="deepseek">
+                <h2>DeepSeek</h2>
+                <div class="hint">︎︎⚲ подробнее</div>
+            </div>
+            <div class="card" data-id="nanoBanana">
+                <h2>Nano Banana Pro</h2>
+                <div class="hint">︎︎⚲ подробнее</div>
+            </div>
+            <div class="card" data-id="sora">
+                <h2>Sora</h2>
+                <div class="hint">︎︎⚲ подробнее</div>
+            </div>
+        </div>
+
+        <div class="detail-panel" id="detailPanel">
+            <div class="detail-content" id="detailContent">
+                <div class="placeholder-text">
+                    <span>✦</span> нажмите на карточку, чтобы увидеть описание
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const descriptions = {
+                gigachat: `GigaChat — мультимодальность: генерирует изображения, анализирует файлы (аудио, видео, документы) и создаёт музыку.`,
+                deepseek: `DeepSeek — отличные навыки программирования. Помогает писать код, рефакторить и объяснять алгоритмы.`,
+                nanoBanana: `Nano Banana Pro — генерация изображений и профессиональное редактирование фотографий.`,
+                sora: `Sora — генерация видео из текста. Создаёт кинематографичные сцены по описанию.`
+            };
+
+            const cards = document.querySelectorAll('.card');
+            const detailContent = document.getElementById('detailContent');
+            let currentlySelectedId = null;
+
+            function showDescription(id) {
+                detailContent.classList.remove('fade-in');
+                void detailContent.offsetWidth;
+
+                let htmlContent = '';
+                if (id && descriptions[id]) {
+                    htmlContent = `<span style="font-weight:300; color:#D4AF37; font-size:1.1rem;">✦</span> ${descriptions[id]}`;
+                } else {
+                    htmlContent = `<div class="placeholder-text"><span>✦</span> нажмите на карточку, чтобы увидеть описание</div>`;
+                }
+
+                detailContent.innerHTML = htmlContent;
+                detailContent.classList.add('fade-in');
+            }
+
+            function deselectAll() {
+                cards.forEach(c => c.classList.remove('selected'));
+            }
+
+            cards.forEach(card => {
+                card.addEventListener('click', (e) => {
+                    const id = card.dataset.id;
+
+                    if (currentlySelectedId === id) {
+                        showDescription(id);
+                        return;
+                    }
+
+                    deselectAll();
+                    card.classList.add('selected');
+                    currentlySelectedId = id;
+                    showDescription(id);
+                });
+            });
+
+            window.addEventListener('load', function() {
+                setTimeout(() => {
+                    const firstCard = document.querySelector('.card[data-id="gigachat"]');
+                    if (firstCard) {
+                        firstCard.classList.add('selected');
+                        currentlySelectedId = 'gigachat';
+                        showDescription('gigachat');
+                    }
+                }, 100);
+            });
+        })();
+    </script>
+</body>
+</html>
